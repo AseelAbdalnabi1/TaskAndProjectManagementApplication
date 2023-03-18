@@ -16,17 +16,17 @@ public class Employee {
     private String jobPosition;
 
    // @ManyToMany
-    private Project project;
+    //private Project project;
    /* @OneToMany
     private Task task;*/
 
-    public Project getProjects() {
+    /*public Project getProjects() {
         return project;
     }
 
-    public void setProjects(Project project) {
+    /*public void setProjects(Project project) {
         this.project = project;
-    }
+    }*/
 
     public String getJobPosition() {
         return jobPosition;
@@ -49,12 +49,12 @@ public class Employee {
         this.jobPosition = jobPosition;
     }
 
-    public Employee(String name, String id, String jobPosition, String projectId) {
+   /* public Employee(String name, String id, String jobPosition, String projectId) {
         this.name = name;
         this.id = id;
         this.jobPosition= jobPosition;
         this.project=new Project(projectId,"","");
-    }
+    }*/
 
     public String getName() {
         return name;
@@ -72,13 +72,13 @@ public class Employee {
         this.id = id;
     }
 
-    public Project getProject() {
+    /*public Project getProject() {
         return project;
     }
 
     public void setProject(Project project) {
         this.project = project;
-    }
+    }*/
 
   /*  public Task getTask() {
         return task;

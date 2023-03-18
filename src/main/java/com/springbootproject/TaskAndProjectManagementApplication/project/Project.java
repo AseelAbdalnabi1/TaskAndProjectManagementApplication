@@ -1,6 +1,10 @@
 package com.springbootproject.TaskAndProjectManagementApplication.project;
+import com.springbootproject.TaskAndProjectManagementApplication.task.Task;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
 
 
 @Entity
@@ -9,6 +13,11 @@ public class Project {
     private String id;
     private String name;
     private String description;
+
+    @OneToMany(mappedBy="project")
+    private List<Task> task;
+   // @OneToMany
+    //private Employee employee;
     public String getId() {
         return id;
     }

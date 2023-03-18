@@ -2,6 +2,7 @@ package com.springbootproject.TaskAndProjectManagementApplication.task;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import com.springbootproject.TaskAndProjectManagementApplication.project.*;
 @Entity
@@ -10,8 +11,10 @@ public class Task {
     private String id;
     private String name;
     private String description;
-    //@ManyToOne
+    @ManyToOne
+    @JoinColumn(name="project_id", nullable=false)
     private Project project;
+
     public Task(String id, String name, String description) {
         this.id = id;
         this.name = name;
