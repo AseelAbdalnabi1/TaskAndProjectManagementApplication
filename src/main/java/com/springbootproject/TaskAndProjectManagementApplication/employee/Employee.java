@@ -28,6 +28,9 @@ public class Employee {
         this.project = project;
     }*/
 
+    public Employee() {
+    }
+
     public String getJobPosition() {
         return jobPosition;
     }

@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -14,8 +16,16 @@ public class Project {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy="project")
-    private List<Task> task;
+    /*public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }*/
+
+    //@OneToMany(mappedBy="project")
+   // private List<Task> tasks;
    // @OneToMany
     //private Employee employee;
     public String getId() {
@@ -26,6 +36,9 @@ public class Project {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    public Project() {
     }
 
     public void setId(String id) {
