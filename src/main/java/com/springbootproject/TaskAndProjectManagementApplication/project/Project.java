@@ -16,16 +16,17 @@ public class Project {
     private String name;
     private String description;
 
-    /*public List<Task> getTasks() {
+   /* public List<Task> getTasks() {
         return tasks;
     }
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
-    }*/
+    }
 
-    //@OneToMany(mappedBy="project")
-   // private List<Task> tasks;
+
+    @OneToMany(mappedBy="project")
+    private List<Task> tasks;*/
    // @OneToMany
     //private Employee employee;
     public String getId() {

@@ -2,10 +2,9 @@ package com.springbootproject.TaskAndProjectManagementApplication.employee;
 
 import com.springbootproject.TaskAndProjectManagementApplication.project.Project;
 import com.springbootproject.TaskAndProjectManagementApplication.task.Task;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Employee {
@@ -14,20 +13,29 @@ public class Employee {
     private String id;
     private String name;
     private String jobPosition;
+    @ManyToOne
+    @JoinColumn(name="project_id", nullable=false)
+    private Project project;
 
-   // @ManyToMany
-    //private Project project;
-   /* @OneToMany
-    private Task task;*/
-
-    /*public Project getProjects() {
+    public Project getProject() {
         return project;
     }
 
-    /*public void setProjects(Project project) {
+    public void setProject(Project project) {
         this.project = project;
-    }*/
+    }
 
+    /*  @OneToMany
+        private List<Task> task;
+
+        public List<Task> getTask() {
+            return task;
+        }
+
+        public void setTask(List<Task> task) {
+            this.task = task;
+        }
+    */
     public Employee() {
     }
 
@@ -39,25 +47,11 @@ public class Employee {
         this.jobPosition = jobPosition;
     }
 
-   /* public Employee(String id, String name, String jobPosition, String taskId) {
-        this.id = id;
-        this.name = name;
-        this.jobPosition = jobPosition;
-        this.task = new Task(taskId,"","");
-    }*/
-
     public Employee(String id, String name, String jobPosition) {
         this.id = id;
         this.name = name;
         this.jobPosition = jobPosition;
     }
-
-   /* public Employee(String name, String id, String jobPosition, String projectId) {
-        this.name = name;
-        this.id = id;
-        this.jobPosition= jobPosition;
-        this.project=new Project(projectId,"","");
-    }*/
 
     public String getName() {
         return name;
@@ -75,19 +69,4 @@ public class Employee {
         this.id = id;
     }
 
-    /*public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project project) {
-        this.project = project;
-    }*/
-
-  /*  public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
-    }*/
 }

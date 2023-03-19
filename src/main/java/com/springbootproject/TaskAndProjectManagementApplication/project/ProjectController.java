@@ -15,7 +15,7 @@ public class ProjectController {
         return projectService.getAllProjects();
     }
     @RequestMapping("/projects/{id}")
-    public Optional<Project> getProject(String id){
+    public Optional<Project> getProject(@PathVariable String id){
         return projectService.getProject(id);
     }
     @RequestMapping(method = RequestMethod.POST,value = "/projects")
