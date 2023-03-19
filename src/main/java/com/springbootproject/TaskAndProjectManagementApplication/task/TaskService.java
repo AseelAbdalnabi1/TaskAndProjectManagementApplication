@@ -11,12 +11,19 @@ import java.util.Optional;
 public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
-    public List<Task> getAllTasks(String projectId){
+    public List<Task> getAllTasksInProject(String projectId){
         List<Task> tasks = new ArrayList<>();
         taskRepository.findByProjectId(projectId)
                 .forEach(tasks::add);
         return tasks;
     }
+    public List<Task> getAllTasksToEmployee(String employeeId){
+        List<Task> tasks = new ArrayList<>();
+        taskRepository.findByEmployeeId(employeeId)
+                .forEach(tasks::add);
+        return tasks;
+    }
+
     public Optional<Task> getTask(String id){
          return taskRepository.findById(id);
     }

@@ -1,5 +1,6 @@
 package com.springbootproject.TaskAndProjectManagementApplication.task;
 
+import com.springbootproject.TaskAndProjectManagementApplication.employee.Employee;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -14,6 +15,18 @@ public class Task {
     @ManyToOne
     @JoinColumn(name="project_id", nullable=false)
     private Project project;
+
+    @ManyToOne
+    @JoinColumn(name="employee_id", nullable=false)
+    private Employee employee;
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 
     public Task(String id, String name, String description) {
         this.id = id;
