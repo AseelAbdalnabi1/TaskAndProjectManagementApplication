@@ -5,38 +5,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
+@RequestMapping("/employees")
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
-    @RequestMapping("/projects/{projectId}/employees")
-    public List<Employee> getAllEmployee(@PathVariable String projectId){
-        return employeeService.getAllEmployee(projectId);
+    @GetMapping
+    public List<Employee> findAllEmployeeS(){
+        return employeeService.findAllEmployees();
     }
-    @RequestMapping("/projects/{projectId}/employees/{id}")
-    public Employee getEmployee(@PathVariable String id){
-        return employeeService.getEmployee(id);
+
+    @GetMapping("/id/{id}")
+    public Employee findEmployeeById(@PathVariable UUID id){
+        return employeeService.findEmployeeById(id);
     }
-    @RequestMapping(method = RequestMethod.POST,value = "/projects/{projectId}/employees")
-    public void addEmployee(@RequestBody Employee employee,@PathVariable String projectId){
-      //employee.setProject(new Project(projectId,"",""));
-        /* List<Task> task=new ArrayList<>();
-        task.add(new Task(taskId,"",""));
-        employee.setTask(task);*/
-        employeeService.addEmployee(employee);
+    @GetMapping("/name/{name}")
+    public List<Employee> findEmployeeByName(@PathVariable String name){
+        return employeeService.findEmployeeByName(name);
     }
-    @RequestMapping(method = RequestMethod.PUT,value = "/projects/{projectId}/employees/{id}")
-    public void updateEmployee(@RequestBody Employee employee,@PathVariable String projectId,@PathVariable String id){
-        /*List<Task> task=new ArrayList<>();
-        task.add(new Task(taskId,"",""));
-        employee.setTask(task);*/
-        //employee.setProject(new Project(projectId,"",""));
-        employeeService.updateEmployee(id,employee);
+    @PostMapping
+    public Employee addEmployee(@RequestParam("name") String name,@RequestParam("jobPosition") String jobPosition){
+        return  employeeService.addEmployee(new Employee(name,jobPosition));
     }
-    @RequestMapping(method = RequestMethod.DELETE,value = "/projects/{projectId}/employees/{id}")
-    public void deleteEmployee(@PathVariable String id){
-        employeeService.deleteEmployee(id);
+    @PutMapping("/id/{id}")
+    public Employee updateEmployeeById(@RequestBody Employee employee,@PathVariable UUID id){
+        return employeeService.updateEmployeeById(id,employee);
+    }
+    @DeleteMapping("/id/{id}")
+    public void deleteEmployeeById(@PathVariable UUID id)
+    {
+        employeeService.deleteEmployeeById(id);
+
     }
 
 }

@@ -43,7 +43,7 @@ public class Employee {
                     CascadeType.MERGE
             },mappedBy = "employees")*/
    @ManyToOne
-   @JoinColumn(name="project_id", nullable=false)
+   @JoinColumn(name="project_id", nullable=true)
     private Project project;
     //@ManyToMany(mappedBy = "employee")
     @ManyToMany(fetch = FetchType.LAZY,

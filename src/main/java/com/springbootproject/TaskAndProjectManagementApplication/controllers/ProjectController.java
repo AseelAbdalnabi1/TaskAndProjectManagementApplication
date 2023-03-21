@@ -15,12 +15,10 @@ import java.util.UUID;
 public class ProjectController {
     @Autowired
     private ProjectService projectService;
-   // @RequestMapping("/projects")
     @GetMapping()
     public List<Project> findAllProjects(){
         return projectService.getAllProjects();
     }
-   // @RequestMapping("/projects/{id}")
     @GetMapping("/name/{name}")
     public List<Project> findProjectByName(@PathVariable String name){
         return projectService.findProjectByName(name);
@@ -29,31 +27,20 @@ public class ProjectController {
     public Project findProjectById(@PathVariable UUID id){
         return projectService.findProjectById(id);
     }
-
-    //@RequestMapping(method = RequestMethod.POST,value = "/projects")
     @PostMapping()
     public Project addProject(@RequestParam("name") String name,@RequestParam("description") String description){
         return projectService.addProject(new Project(name,description));
     }
-    //@RequestMapping(method = RequestMethod.PUT,value = "/projects/{id}")
     @PutMapping("/id/{id}")
     public Project updateProjectById(@RequestBody Project project,@PathVariable UUID id){
        return projectService.updateProjectById(project,id);
     }
-    /*@PutMapping("/name/{name}")
-    public Project updateProjectByName(@RequestBody Project project,@PathVariable String name){
-        projectService.updateProjectByName(project,name);
-        return project;
-    }*/
-    //@RequestMapping(method = RequestMethod.DELETE,value = "/projects/{id}")
+
     @DeleteMapping("/id/{id}")
     public void deleteProjectById(@PathVariable UUID id){
       projectService.deleteProjectById(id);
     }
-    /*@DeleteMapping("/name/{name}")
-    public void deleteProjectByName(@PathVariable String name){
-        projectService.deleteProjectByName(name);
-    }*/
+
 
 
 }

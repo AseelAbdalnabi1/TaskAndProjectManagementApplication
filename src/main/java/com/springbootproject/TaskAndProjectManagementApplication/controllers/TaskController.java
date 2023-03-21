@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -34,7 +33,6 @@ public class TaskController {
     public Task updateTaskById(@RequestBody Task task,@PathVariable UUID id){
         return taskService.updateTask(task,id);
     }
-   // @RequestMapping(method = RequestMethod.DELETE,value="/projects/{projectId}/tasks/{id}")
     @DeleteMapping("/id/{id}")
     public void deleteTaskById(@PathVariable UUID id){
          taskService.deleteTaskById(id);
