@@ -1,8 +1,7 @@
-package com.springbootproject.TaskAndProjectManagementApplication.employee;
+package com.springbootproject.TaskAndProjectManagementApplication.repositories;
 
-import com.springbootproject.TaskAndProjectManagementApplication.task.Task;
+import com.springbootproject.TaskAndProjectManagementApplication.models.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
