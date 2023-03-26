@@ -30,16 +30,6 @@ public class Project {
             joinColumns = { @JoinColumn(name = "project_id") },
             inverseJoinColumns = { @JoinColumn(name = "task_id") })
     private List<Task> tasks=new ArrayList<>();
-
-
-   /* @OneToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(name = "project_employee",
-            joinColumns = { @JoinColumn(name = "project_id") },
-            inverseJoinColumns = { @JoinColumn(name = "employee_id") })*/
      @OneToMany(mappedBy="project")
     private List<Employee> employees =new ArrayList<>();
 
@@ -50,20 +40,14 @@ public class Project {
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
-   /* public Project(String name, String description) {
-        setId();
-        this.name = name;
-        this.description = description;
-    }*/
-
     public Project() {
     }
-   /* public Project(String id,String name, String description){
-        this.id=id;
+
+    public Project(String id, String name, String description) {
+        this.id = id;
         this.name = name;
         this.description = description;
-    }*/
-
+    }
 
     public String getName() {
         return name;

@@ -44,12 +44,6 @@ public class Employee {
             inverseJoinColumns = { @JoinColumn(name = "task_id") })
     private List<Task> tasks=new ArrayList<>();
 
-    /*public Employee(String name, String jobPosition) {
-        setId();
-        this.name = name;
-        this.jobPosition = jobPosition;
-    }*/
-
     public Project getProject() {
         return project;
     }

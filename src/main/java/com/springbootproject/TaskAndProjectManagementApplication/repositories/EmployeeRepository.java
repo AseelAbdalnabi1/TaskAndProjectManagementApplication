@@ -10,11 +10,5 @@ import java.util.UUID;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee,String> {
-    //public List<Employee> findByProjectId(String projectId);
-    public Optional<Employee> findById(UUID id);
-    public boolean existsById(UUID id);
-
-    public void deleteById(UUID id);
-
     public List<Employee> findByName(String name);
 }

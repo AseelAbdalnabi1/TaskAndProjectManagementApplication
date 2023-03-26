@@ -1,5 +1,4 @@
 package com.springbootproject.TaskAndProjectManagementApplication.services;
-
 import com.springbootproject.TaskAndProjectManagementApplication.models.Task;
 import com.springbootproject.TaskAndProjectManagementApplication.repositories.TaskRepository;
 import jakarta.transaction.Transactional;
@@ -10,14 +9,11 @@ import java.util.List;
 @Service
 @Transactional
 public class TaskService {
-
     private TaskRepository taskRepository;
     @Autowired
-
     public void setTaskRepository(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
-
     public List<Task> findAllTasks(){
             return taskRepository.findAll();
     }
@@ -45,7 +41,4 @@ public class TaskService {
         }
         taskRepository.deleteById(id);
     }
-
-
-
 }

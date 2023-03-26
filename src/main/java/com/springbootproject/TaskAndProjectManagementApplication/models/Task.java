@@ -33,18 +33,6 @@ public class Task {
     private List<Employee> employees=new ArrayList<>();
 
 
-    /*public Task( UUID id, String name, String description) {
-        setId();
-        //this.id = id;
-        this.name = name;
-        this.description = description;
-    }
-*/
-    /*public Task(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }*/
-
     public Task() {
     }
 
@@ -90,7 +78,5 @@ public class Task {
     public String generateId(){
         this.id=UUID.randomUUID().toString();
         return this.id;
-
     }
-
 }
