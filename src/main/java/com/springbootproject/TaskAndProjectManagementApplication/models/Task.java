@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,48 +16,51 @@ import java.util.UUID;
         scope = Task.class)
 public class Task {
     @Id
-    private UUID id;
+    private String id;
     private String name;
     private String description;
-   // @ManyToMany//many to many
-    //@JoinColumn(name="project_id", nullable=false)
    @ManyToMany(fetch = FetchType.LAZY,
            cascade = {
                    CascadeType.PERSIST,
                    CascadeType.MERGE
            },mappedBy = "tasks")
-    private List<Project> projects;
-   //manyto many
+    private List<Project> projects=new ArrayList<>();
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             },mappedBy = "tasks")
-    private List<Employee> employees;
+    private List<Employee> employees=new ArrayList<>();
 
 
-
-    public Task( String name, String description) {
+    /*public Task( UUID id, String name, String description) {
         setId();
+        //this.id = id;
         this.name = name;
         this.description = description;
     }
+*/
+    /*public Task(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }*/
 
     public Task() {
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    private void setId() {
-        this.id = UUID.randomUUID();
+    public void setId(String id) {
+        this.id = id;
     }
-    public List<Project> getProject() {
+
+    public List<Project> getProjects() {
         return projects;
     }
 
-    public void setProject(List<Project> projects) {
+    public void setProjects(List<Project> projects) {
         this.projects = projects;
     }
 
@@ -82,6 +86,11 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    public String generateId(){
+        this.id=UUID.randomUUID().toString();
+        return this.id;
+
     }
 
 }

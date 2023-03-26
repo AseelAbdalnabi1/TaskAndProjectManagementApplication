@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,36 +17,23 @@ import java.util.UUID;
 public class Employee {
 
     @Id
-    private UUID id;
-
-    public UUID getId() {
-        return id;
-    }
-
-    private void setId() {
-        this.id = UUID.randomUUID();
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-    }
+    private String id;
 
     private String name;
     private String jobPosition;
 
-   /* @ManyToOne(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },mappedBy = "employees")*/
    @ManyToOne
    @JoinColumn(name="project_id", nullable=true)
     private Project project;
-    //@ManyToMany(mappedBy = "employee")
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
@@ -54,13 +42,13 @@ public class Employee {
     @JoinTable(name = "employees_tasks",
             joinColumns = { @JoinColumn(name = "employee_id") },
             inverseJoinColumns = { @JoinColumn(name = "task_id") })
-    private List<Task> tasks;
+    private List<Task> tasks=new ArrayList<>();
 
-    public Employee(String name, String jobPosition) {
+    /*public Employee(String name, String jobPosition) {
         setId();
         this.name = name;
         this.jobPosition = jobPosition;
-    }
+    }*/
 
     public Project getProject() {
         return project;
@@ -69,16 +57,6 @@ public class Employee {
     public void setProject(Project project) {
         this.project = project;
     }
-
-
-
-        public List<Task> getTask() {
-            return tasks;
-        }
-
-        public void setTask(List<Task> task) {
-            this.tasks = task;
-        }
 
     public Employee() {
     }
@@ -98,6 +76,19 @@ public class Employee {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+    public String generateId(){
+        this.id=UUID.randomUUID().toString();
+     return this.id;
+
     }
 
 

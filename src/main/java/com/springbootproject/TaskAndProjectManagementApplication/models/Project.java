@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,28 +16,10 @@ import java.util.UUID;
         scope = Project.class)
 public class Project {
     @Id
-    private UUID id;
-  //  @Column(unique=true)
+    private String id;
     private String name;
     private String description;
 
-    public UUID getId() {
-        return id;
-    }
-
-    private void setId() {
-        this.id = UUID.randomUUID();
-    }
-
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
-    }
-
-    //@ManyToMany(mappedBy="project")//many to many
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
@@ -46,7 +29,7 @@ public class Project {
     @JoinTable(name = "projects_tasks",
             joinColumns = { @JoinColumn(name = "project_id") },
             inverseJoinColumns = { @JoinColumn(name = "task_id") })
-    private List<Task> tasks;
+    private List<Task> tasks=new ArrayList<>();
 
 
    /* @OneToMany(fetch = FetchType.LAZY,
@@ -58,7 +41,7 @@ public class Project {
             joinColumns = { @JoinColumn(name = "project_id") },
             inverseJoinColumns = { @JoinColumn(name = "employee_id") })*/
      @OneToMany(mappedBy="project")
-    private List<Employee> employees;
+    private List<Employee> employees =new ArrayList<>();
 
     public List<Task> getTasks() {
         return tasks;
@@ -67,14 +50,19 @@ public class Project {
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
-    public Project(String name, String description) {
+   /* public Project(String name, String description) {
         setId();
         this.name = name;
         this.description = description;
-    }
+    }*/
 
     public Project() {
     }
+   /* public Project(String id,String name, String description){
+        this.id=id;
+        this.name = name;
+        this.description = description;
+    }*/
 
 
     public String getName() {
@@ -92,5 +80,27 @@ public class Project {
     public void setDescription(String description) {
         this.description = description;
     }
+    public String getId() {
+        return id;
+    }
 
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
+
+
+    public String generateId(){
+        this.id=UUID.randomUUID().toString();
+        return this.id;
+
+    }
 }

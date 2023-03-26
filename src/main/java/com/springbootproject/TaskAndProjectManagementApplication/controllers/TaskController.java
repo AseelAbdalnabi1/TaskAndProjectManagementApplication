@@ -6,19 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
-    @Autowired
+
     private TaskService taskService;
+    @Autowired
+    public void setTaskService(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
     @GetMapping()
     public List<Task> findAllTasks(){
         return taskService.findAllTasks();
     }
     @GetMapping("/id/{id}")
-    public Task findTaskById(@PathVariable UUID id){
+    public Task findTaskById(@PathVariable String id){
         return taskService.findTaskById(id);
     }
     @GetMapping("/name/{name}")
@@ -26,15 +31,15 @@ public class TaskController {
         return taskService.findTaskByName(name);
     }
     @PostMapping()
-    public Task addTask(@RequestParam("name") String name,@RequestParam("description") String description){
-       return taskService.addTask(new Task(name,description));
+    public Task createTask(@RequestBody Task task){//@RequestParam("name") String name,@RequestParam("description") String description){
+       return taskService.createTask(task);
     }
     @PutMapping("/id/{id}")
-    public Task updateTaskById(@RequestBody Task task,@PathVariable UUID id){
+    public Task updateTaskById(@RequestBody Task task,@PathVariable String id){
         return taskService.updateTask(task,id);
     }
     @DeleteMapping("/id/{id}")
-    public void deleteTaskById(@PathVariable UUID id){
+    public void deleteTaskById(@PathVariable String id){
          taskService.deleteTaskById(id);
     }
 

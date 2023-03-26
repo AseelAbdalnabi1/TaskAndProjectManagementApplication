@@ -6,40 +6,43 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Transactional
 public class TaskService {
-    @Autowired
+
     private TaskRepository taskRepository;
+    @Autowired
+
+    public void setTaskRepository(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
+
     public List<Task> findAllTasks(){
             return taskRepository.findAll();
     }
-    public Task findTaskById(UUID id){
+    public Task findTaskById(String id){
          return taskRepository.findById(id).orElse(null);
     }
     public List<Task> findTaskByName(String name) {
         return taskRepository.findByName(name);
     }
-    public Task addTask(Task task){
-        taskRepository.save(task);
-        return taskRepository.findById(task.getId()).get();
+    public Task createTask(Task task){
+        task.generateId();
+       return taskRepository.save(task);
     }
-    public Task updateTask(Task task,UUID id){
+    public Task updateTask(Task task,String id){
         boolean exists = taskRepository.existsById(id);
         if(!exists){
             throw new IllegalStateException("task with id "+ id +" does not exists");
         }
-        taskRepository.save(task);
-        return taskRepository.findById(task.getId()).get();
+       return taskRepository.save(task);
     }
-    public void deleteTaskById(UUID id){
+    public void deleteTaskById(String id){
         boolean exists = taskRepository.existsById(id);
         if(!exists){
             throw new IllegalStateException("task with id "+ id +" does not exists");
         }
-
         taskRepository.deleteById(id);
     }
 
