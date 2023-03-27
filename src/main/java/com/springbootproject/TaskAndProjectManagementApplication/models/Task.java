@@ -3,6 +3,8 @@ package com.springbootproject.TaskAndProjectManagementApplication.models;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,9 @@ import java.util.UUID;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id",
         scope = Task.class)
+
+@Setter
+@Getter
 public class Task {
     @Id
     private String id;
@@ -34,46 +39,6 @@ public class Task {
 
 
     public Task() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public List<Project> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(List<Project> projects) {
-        this.projects = projects;
-    }
-
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
     public String generateId(){
         this.id=UUID.randomUUID().toString();
