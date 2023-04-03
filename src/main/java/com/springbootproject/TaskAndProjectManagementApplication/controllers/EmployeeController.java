@@ -5,6 +5,7 @@ import com.springbootproject.TaskAndProjectManagementApplication.services.Employ
 import com.springbootproject.TaskAndProjectManagementApplication.models.Employee;
 import jakarta.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +13,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
+
     private EmployeeService employeeService;
     @Autowired
-    public void setEmployeeService(EmployeeService employeeService) {
+    public EmployeeController(@Lazy EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
@@ -29,9 +31,9 @@ public class EmployeeController {
     public Employee findEmployeeById(@PathVariable String id){
         return employeeService.findEmployeeById(id);
     }
-    @GetMapping("/name/{name}")
+    @GetMapping("/")//needs fixes--produces errors because there is already a get method without a specific path (getAllemployees)
     @ResponseStatus(code = HttpStatus.OK)
-    public List<Employee> findEmployeeByName(@PathVariable String name){
+    public List<Employee> findEmployeeByName(@RequestParam(name = "name") String name){
         return employeeService.findEmployeeByName(name);
     }
     @PostMapping
@@ -49,28 +51,16 @@ public class EmployeeController {
     public void deleteEmployeeById(@PathVariable String id)
     {
         employeeService.deleteEmployeeById(id);
+    }
+    @PutMapping("/{id}/attach/tasks/{task-id}")//the attach word added to differentiate between attachTaskToEmployee path &  discardTaskFromEmployee path --need to be discussed
+    @ResponseStatus(code = HttpStatus.OK)
+    public Employee attachTaskToEmployee(@PathVariable String id, @PathVariable(name = "task-id") String taskId){
+        return employeeService.attachTaskToEmployee(id,taskId);
 
     }
-    @PostMapping("/{id}/projects")
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public Employee addProjectToEmployee(@PathVariable String id,@RequestBody Project project){
-        return employeeService.addProjectToEmployee(id,project);
-
-    }
-    @DeleteMapping("/{id}/projects")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public Employee removeProjectFromEmployee(@PathVariable String id){
-        return employeeService.removeProjectFromEmployee(id);
-    }
-    @PostMapping("/{id}/tasks")
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public Employee addTaskToEmployee(@PathVariable String id, @RequestBody Task task){
-        return employeeService.addTaskToEmployee(id,task);
-
-    }
-    @DeleteMapping("/{id}/tasks/{task-id}")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public Employee removeTaskFromEmployee(@PathVariable String id,@PathVariable("task-id") String task_id){
-        return employeeService.removeTaskFromEmployee(id,task_id);
+    @PutMapping("/{id}/discard/tasks/{task-id}")//the discard word added to differentiate between attachTaskToEmployee path &  discardTaskFromEmployee path --need to be discussed
+    @ResponseStatus(code = HttpStatus.OK)
+    public Employee discardTaskFromEmployee(@PathVariable String id,@PathVariable("task-id") String task_id){
+        return employeeService.discardTaskFromEmployee(id,task_id);
     }
 }

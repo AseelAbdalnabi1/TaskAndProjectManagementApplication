@@ -1,36 +1,28 @@
 package com.springbootproject.TaskAndProjectManagementApplication.services;
 
 import com.springbootproject.TaskAndProjectManagementApplication.models.Employee;
-import com.springbootproject.TaskAndProjectManagementApplication.models.Project;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Task;
 import com.springbootproject.TaskAndProjectManagementApplication.repositories.EmployeeRepository;
-import com.springbootproject.TaskAndProjectManagementApplication.repositories.ProjectRepository;
-import com.springbootproject.TaskAndProjectManagementApplication.repositories.TaskRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @Transactional
 public class EmployeeService {
+
     private EmployeeRepository employeeRepository;
-    private TaskRepository taskRepository;
+    private TaskService taskService;
+    private ProjectService projectService;
     @Autowired
-    public void setTaskRepository(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
-    @Autowired
-    public void setProjectRepository(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
-    }
-    private ProjectRepository projectRepository;
-    @Autowired
-    public void setEmployeeRepository(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository,@Lazy TaskService taskService,@Lazy ProjectService projectService) {
         this.employeeRepository = employeeRepository;
+        this.taskService = taskService;
+        this.projectService = projectService;
     }
+
     public List<Employee> findAllEmployees(){
         return employeeRepository.findAll();
     }
@@ -58,63 +50,31 @@ public class EmployeeService {
         }
         employeeRepository.deleteById(id);
     }
-
-    public Employee addProjectToEmployee(String id, Project project) {
-        boolean exists1 = employeeRepository.existsById(id);
-        boolean exists2 = projectRepository.existsById(project.getId());
-        if (!exists1) {
+     public Employee attachTaskToEmployee(String id, String taskId) {
+        Employee employee = employeeRepository.findById(id).orElse(null);
+        if (employee==null) {
             throw new IllegalStateException("Employee with id " + id + " does not exists");
         }
-       else if (!exists2) {
-            throw new IllegalStateException("Project with id " + project.getId() + " does not exists");
+        Task task=taskService.findTaskById(taskId);
+        if(task==null){
+            throw new IllegalStateException("Task with id " + taskId + " does not exists");
         }
-        List<Employee> employees=new ArrayList<>();
-        employees.add(employeeRepository.findById(id).get());
-        project.setEmployees(employees);
-        projectRepository.save(project);
-        employeeRepository.findById(id).get().setProject(project);
-        return employeeRepository.findById(id).orElse(null);
-    }
-    public Employee removeProjectFromEmployee(String id) {
-        boolean exists1 = employeeRepository.existsById(id);
-        if (!exists1) {
-            throw new IllegalStateException("Project with id " + id + " does not exists");
+        if(!employee.getTasks().contains(task)) {//to remove duplication
+            employee.getTasks().add(task);
         }
-        employeeRepository.findById(id).get().setProject(null);
-        return employeeRepository.findById(id).orElse(null);
-    }
-    public Employee addTaskToEmployee(String id, Task task) {
-        boolean exists1 = employeeRepository.existsById(id);
-
-        if (!exists1) {
-            throw new IllegalStateException("Employee with id " + id + " does not exists");
-        }
-        if(!taskRepository.existsById(task.getId())){
-            task.generateId();
-            List<Employee> employees=new ArrayList<>();
-            employees.add(employeeRepository.findById(id).get());
-            task.setEmployees(employees);
-            taskRepository.save(task);
-        }
-        Employee employee =employeeRepository.findById(id).get();
-        if(!employee.getTasks().contains(task)) {
-            employeeRepository.findById(id).get().getTasks().add(taskRepository.findById(task.getId()).orElse(null));
-        }
-
-        return employeeRepository.findById(id).orElse(null);
+            return employee;
     }
 
-    public Employee removeTaskFromEmployee(String id,String task_id) {
-        boolean exists1 = employeeRepository.existsById(id);
-        boolean exists2 = taskRepository.existsById(task_id);
-        if (!exists1) {
-            throw new IllegalStateException("Project with id " + id + " does not exists");
-        }else if (!exists2) {
+    public Employee discardTaskFromEmployee(String id,String task_id) {
+        Employee employee=employeeRepository.findById(id).orElse(null);
+        Task task=taskService.findTaskById(task_id);
+        if(employee==null){
+            throw new IllegalStateException("Project with id " + id + " does not exists");//it should return response entity
+        } else if (task==null) {
             throw new IllegalStateException("Task with id " + task_id + " does not exists");
         }
-        employeeRepository.findById(id).get().getTasks().remove(taskRepository.findById(task_id).get());
-        return employeeRepository.findById(id).get();
-
+        employee.getTasks().remove(task);
+        return employee;
     }
 
 }

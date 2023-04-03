@@ -8,7 +8,9 @@ import com.springbootproject.TaskAndProjectManagementApplication.repositories.Pr
 import com.springbootproject.TaskAndProjectManagementApplication.repositories.TaskRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,21 +18,14 @@ import java.util.List;
 @Service
 @Transactional
 public class ProjectService {
-
     private ProjectRepository projectRepository;
+    private EmployeeService employeeService;
+    private TaskService taskService;
     @Autowired
-    public void setEmployeeRepository(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    public void setProjectRepository(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository, @Lazy EmployeeService employeeService,@Lazy TaskService taskService) {
         this.projectRepository = projectRepository;
-    }
-    public TaskRepository taskRepository;
-    @Autowired
-    public void setTaskRepository(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+        this.employeeService = employeeService;
+        this.taskService = taskService;
     }
 
     public List<Project> getAllProjects() {
@@ -66,34 +61,71 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-    public Project addTaskToProject(String id, Task task) {
-        boolean exists = projectRepository.existsById(id);
-        if (!exists) {
+    public Project attachTaskToProject(String id, String taskId) {
+        Project project = projectRepository.findById(id).orElse(null);
+        if (project==null) {
             throw new IllegalStateException("Project with id " + id + " does not exists");
         }
-        if(!taskRepository.existsById(task.getId())) {//if task is not exists in the taskRepository --task is new to taskRepository
-            task.generateId();
-            List<Project> projects=new ArrayList<>();
-            projects.add(projectRepository.findById(id).get());
-            task.setProjects(projects);
-            taskRepository.save(task);//create new employee and add it to employeeRepository
+        Task task = taskService.findTaskById(taskId);
+        if (task==null) {
+            throw new IllegalStateException("Task with id " + id + " does not exists");
         }
-        Project project=projectRepository.findById(id).get();
-        if(!project.getTasks().contains(task.getId())) {//still not working in a right way
-            project.getTasks().add(taskRepository.findById(task.getId()).orElse(null));
+        if(!project.getTasks().contains(task)) {
+            project.getTasks().add(task);
         }
-        return projectRepository.findById(id).get();
+        return project;
+
     }
-    public Project removeTaskFromProject(String id, String task_id) {
-        boolean exists1 = projectRepository.existsById(id);
-        boolean exists2 = taskRepository.existsById(task_id);
-        if (!exists1) {
+
+    public Project discardTaskFromProject(String id, String task_id) {
+        Project project = projectRepository.findById(id).orElse(null);
+        Task task = taskService.findTaskById(task_id);
+        if (project==null) {
             throw new IllegalStateException("Project with id " + id + " does not exists");
-        } else if (!exists2) {
+        } else if (task==null) {
             throw new IllegalStateException("Task with id " + task_id + " does not exists");
         }
-        projectRepository.findById(id).get().getTasks().remove(taskRepository.findById(task_id).get());
-        return projectRepository.findById(id).get();
+        if(project.getTasks().contains(task)) {
+            project.getTasks().remove(task);
+        }
+        return project;
+    }
+
+    public Project attachEmployeeToProject(String id, String employeeId) {
+        Employee employee = employeeService.findEmployeeById(employeeId);
+        Project project = projectRepository.findById(id).orElse(null);
+        if (employee==null) {
+            throw new IllegalStateException("Employee with id " + employeeId + " does not exists");
+        }
+        else if (project==null) {
+            throw new IllegalStateException("Project with id " + id + " does not exists");
+        }
+        /*List<Employee> employees=new ArrayList<>();
+        employees.add(employee);
+        project.setEmployees(employees);
+        projectService.updateProjectById(project,projectId);
+        employee.setProject(project);
+        */
+        if(employee.getProject()!=project) {
+            employee.setProject(project);
+        }
+        return project;
+    }
+
+    public Project discardEmployeeFromProject(String id, String employeeId) {
+        Employee employee = employeeService.findEmployeeById(employeeId);
+        Project project = projectRepository.findById(id).orElse(null);
+        if (employee==null) {
+            throw new IllegalStateException("Employee with id " + employeeId + " does not exists");
+        }
+        else if (project==null) {
+            throw new IllegalStateException("Project with id " + id + " does not exists");
+        }
+        if(employee.getProject()==project) {
+            employee.setProject(null);
+        }
+        return project;
     }
 }
+
 

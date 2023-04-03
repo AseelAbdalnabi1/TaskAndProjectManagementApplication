@@ -32,8 +32,6 @@ public class Employee {
    @JoinColumn(name="project_id", nullable=true)
     private Project project;
 
-
-
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
@@ -50,7 +48,4 @@ public class Employee {
      return this.id;
 
     }
-
-
-
 }
