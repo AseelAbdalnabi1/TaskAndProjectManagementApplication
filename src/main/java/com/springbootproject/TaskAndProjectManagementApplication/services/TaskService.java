@@ -10,11 +10,9 @@ import java.util.List;
 @Service
 @Transactional
 public class TaskService {
-
-
     private TaskRepository taskRepository;
     @Autowired
-    public TaskService(@Lazy TaskRepository taskRepository) {
+    public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
     public List<Task> findAllTasks(){

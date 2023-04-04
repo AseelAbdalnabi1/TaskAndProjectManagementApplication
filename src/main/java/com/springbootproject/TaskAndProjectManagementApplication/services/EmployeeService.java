@@ -17,7 +17,7 @@ public class EmployeeService {
     private TaskService taskService;
     private ProjectService projectService;
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository,@Lazy TaskService taskService,@Lazy ProjectService projectService) {
+    public EmployeeService(EmployeeRepository employeeRepository,TaskService taskService, ProjectService projectService) {
         this.employeeRepository = employeeRepository;
         this.taskService = taskService;
         this.projectService = projectService;

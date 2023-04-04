@@ -1,11 +1,9 @@
 package com.springbootproject.TaskAndProjectManagementApplication.models;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,13 +22,13 @@ public class Task {
     private String id;
     private String name;
     private String description;
-   @ManyToMany(fetch = FetchType.LAZY,
+   @ManyToMany(
            cascade = {
                    CascadeType.PERSIST,
                    CascadeType.MERGE
            },mappedBy = "tasks")
     private List<Project> projects=new ArrayList<>();
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToMany(
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE

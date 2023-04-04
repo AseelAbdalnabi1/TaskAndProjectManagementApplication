@@ -14,13 +14,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/projects")
 public class ProjectController {
-
     private ProjectService projectService;
     @Autowired
-    public ProjectController(@Lazy ProjectService projectService) {
+    public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
     }
-
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
     public List<Project> findAllProjects(){

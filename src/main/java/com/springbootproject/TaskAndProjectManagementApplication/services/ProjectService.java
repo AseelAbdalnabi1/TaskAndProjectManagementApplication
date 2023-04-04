@@ -3,17 +3,11 @@ package com.springbootproject.TaskAndProjectManagementApplication.services;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Employee;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Project;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Task;
-import com.springbootproject.TaskAndProjectManagementApplication.repositories.EmployeeRepository;
 import com.springbootproject.TaskAndProjectManagementApplication.repositories.ProjectRepository;
-import com.springbootproject.TaskAndProjectManagementApplication.repositories.TaskRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 @Service
 @Transactional
@@ -22,7 +16,7 @@ public class ProjectService {
     private EmployeeService employeeService;
     private TaskService taskService;
     @Autowired
-    public ProjectService(ProjectRepository projectRepository, @Lazy EmployeeService employeeService,@Lazy TaskService taskService) {
+    public ProjectService(ProjectRepository projectRepository,@Lazy EmployeeService employeeService,TaskService taskService) {
         this.projectRepository = projectRepository;
         this.employeeService = employeeService;
         this.taskService = taskService;
@@ -100,12 +94,6 @@ public class ProjectService {
         else if (project==null) {
             throw new IllegalStateException("Project with id " + id + " does not exists");
         }
-        /*List<Employee> employees=new ArrayList<>();
-        employees.add(employee);
-        project.setEmployees(employees);
-        projectService.updateProjectById(project,projectId);
-        employee.setProject(project);
-        */
         if(employee.getProject()!=project) {
             employee.setProject(project);
         }

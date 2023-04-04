@@ -13,10 +13,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
-
     private EmployeeService employeeService;
     @Autowired
-    public EmployeeController(@Lazy EmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
@@ -52,13 +51,13 @@ public class EmployeeController {
     {
         employeeService.deleteEmployeeById(id);
     }
-    @PutMapping("/{id}/attach/tasks/{task-id}")//the attach word added to differentiate between attachTaskToEmployee path &  discardTaskFromEmployee path --need to be discussed
+    @PutMapping("/{id}/attach/tasks/{task-id}")//the (attach) word added to differentiate between attachTaskToEmployee path &  discardTaskFromEmployee path --need to be discussed
     @ResponseStatus(code = HttpStatus.OK)
     public Employee attachTaskToEmployee(@PathVariable String id, @PathVariable(name = "task-id") String taskId){
         return employeeService.attachTaskToEmployee(id,taskId);
 
     }
-    @PutMapping("/{id}/discard/tasks/{task-id}")//the discard word added to differentiate between attachTaskToEmployee path &  discardTaskFromEmployee path --need to be discussed
+    @PutMapping("/{id}/discard/tasks/{task-id}")//the (discard) word added to differentiate between attachTaskToEmployee path &  discardTaskFromEmployee path --need to be discussed
     @ResponseStatus(code = HttpStatus.OK)
     public Employee discardTaskFromEmployee(@PathVariable String id,@PathVariable("task-id") String task_id){
         return employeeService.discardTaskFromEmployee(id,task_id);

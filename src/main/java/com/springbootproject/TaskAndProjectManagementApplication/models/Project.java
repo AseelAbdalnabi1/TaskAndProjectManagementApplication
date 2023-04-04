@@ -4,12 +4,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-
 @Entity
 @Table(name = "projects")
 @JsonIdentityInfo(
@@ -24,9 +21,7 @@ public class Project {
     private String id;
     private String name;
     private String description;
-
-
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToMany(
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
@@ -42,6 +37,5 @@ public class Project {
     public String generateId(){
         this.id=UUID.randomUUID().toString();
         return this.id;
-
     }
 }

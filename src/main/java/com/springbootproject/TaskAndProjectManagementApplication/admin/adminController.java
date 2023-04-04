@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class adminController {
     private ProjectService projectService;
     @Autowired
-    public adminController(@Lazy ProjectService projectService) {
+    public adminController(ProjectService projectService) {
         this.projectService = projectService;
     }
     @PostMapping
@@ -25,7 +25,6 @@ public class adminController {
     public Project updateProjectById(@RequestBody Project project,@PathVariable String id){
         return projectService.updateProjectById(project,id);
     }
-
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteProjectById(@PathVariable String id){
