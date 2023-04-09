@@ -2,8 +2,8 @@ package com.springbootproject.TaskAndProjectManagementApplication.services;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Task;
 import com.springbootproject.TaskAndProjectManagementApplication.repositories.TaskRepository;
 import jakarta.transaction.Transactional;
+import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import java.util.List;
 

@@ -15,12 +15,10 @@ public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
     private TaskService taskService;
-    private ProjectService projectService;
     @Autowired
     public EmployeeService(EmployeeRepository employeeRepository,TaskService taskService, ProjectService projectService) {
         this.employeeRepository = employeeRepository;
         this.taskService = taskService;
-        this.projectService = projectService;
     }
 
     public List<Employee> findAllEmployees(){
