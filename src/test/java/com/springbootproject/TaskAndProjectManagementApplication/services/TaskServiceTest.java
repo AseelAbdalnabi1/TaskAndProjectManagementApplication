@@ -35,7 +35,6 @@ class TaskServiceTest{
         when(taskRepository.findAll()).thenReturn(tasks1);
         List<Task> tasks2=taskService.findAllTasks();
         assertNotNull(tasks2);
-        //not empty
         assertEquals(tasks1.size(),tasks2.size());
     }
 
@@ -45,7 +44,6 @@ class TaskServiceTest{
         task.setDescription("task1 description");
         task.setName("task1");
         task.setId("0ab2f2be-30b8-45be-a6c7-d2c260c6e1d1");
-       // when(taskRepository.findById(anyString()).orElse(null)).thenReturn(task);
         when(taskRepository.findById(anyString())).thenReturn(Optional.of(Optional.of(task).get()));
         Task task1= taskService.findTaskById("0ab2f2be-30b8-45be-a6c7-d2c260c6e1d1");
         assertNotNull(task1);
@@ -94,18 +92,10 @@ class TaskServiceTest{
         assertEquals(task1.getId(),task2.getId());
         assertEquals(task1.getDescription(),task2.getDescription());
     }
-    @Test//(expected = IllegalStateException.class)
+    @Test
     void deleteTaskById_NotFoundCase() {
         doThrow(new IllegalArgumentException()).when(taskRepository).deleteById(anyString());
-        /*try {
-            taskService.deleteTaskById("125");
-            fail();
-        } catch(Exception e) {
-            assertTrue(e instanceof IllegalArgumentException);
-        }*/
         assertThrows(IllegalStateException.class,()-> {taskService.deleteTaskById("12");});
-       // taskService.deleteTaskById("123");
-
     }
     @Test
     void deleteTaskById() {
@@ -117,10 +107,5 @@ class TaskServiceTest{
         } catch(Exception e) {
             fail();
         }
-        /*when(taskRepository.deleteById(anyString());
-        taskService.deleteTaskById("0ab2f2be-30b8-45be-a6c7-d2c260c6e1d1");
-       // Task task =taskRepository.findById("0ab2f2be-30b8-45be-a6c7-d2c260c6e1d1").orElse(null);
-        assertNull(taskRepository.findById("0ab2f2be-30b8-45be-a6c7-d2c260c6e1d1").orElse(null));
-     //   assertThrows(IllegalStateException.class,()-> {taskService.deleteTaskById("12");});
-    */}
+    }
 }
