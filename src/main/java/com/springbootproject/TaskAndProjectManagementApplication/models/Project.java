@@ -2,12 +2,13 @@ package com.springbootproject.TaskAndProjectManagementApplication.models;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.data.aerospike.mapping.Document;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-@Entity
+//@Entity
 @Table(name = "projects")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -16,6 +17,10 @@ import java.util.UUID;
 
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Document
 public class Project {
     @Id
     private String id;
@@ -32,8 +37,8 @@ public class Project {
     private List<Task> tasks=new ArrayList<>();
      @OneToMany(mappedBy="project")
     private List<Employee> employees =new ArrayList<>();
-    public Project() {
-    }
+    /*public Project() {
+    }*/
     public String generateId(){
         this.id=UUID.randomUUID().toString();
         return this.id;

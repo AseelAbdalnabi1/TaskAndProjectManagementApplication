@@ -1,6 +1,6 @@
 package com.springbootproject.TaskAndProjectManagementApplication.controllers;
 
-import com.springbootproject.TaskAndProjectManagementApplication.MyUserDetailsService;
+import com.springbootproject.TaskAndProjectManagementApplication.services.MyUserDetailsService;
 import com.springbootproject.TaskAndProjectManagementApplication.models.AuthenticationRequest;
 import com.springbootproject.TaskAndProjectManagementApplication.models.AuthenticationResponse;
 import com.springbootproject.TaskAndProjectManagementApplication.models.User;

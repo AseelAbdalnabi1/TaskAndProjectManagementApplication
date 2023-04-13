@@ -1,4 +1,4 @@
-package com.springbootproject.TaskAndProjectManagementApplication;
+package com.springbootproject.TaskAndProjectManagementApplication.services;
 
 import com.springbootproject.TaskAndProjectManagementApplication.models.MyUserDetails;
 import com.springbootproject.TaskAndProjectManagementApplication.models.User;

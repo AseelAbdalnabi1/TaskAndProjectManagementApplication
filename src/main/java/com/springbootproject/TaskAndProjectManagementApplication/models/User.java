@@ -1,14 +1,19 @@
 package com.springbootproject.TaskAndProjectManagementApplication.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.data.aerospike.mapping.Document;
+
 import java.util.UUID;
 
-@Entity
+//@Entity
 @Table(name = "users")
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Document
 public class User {
     @Id
     private String id;

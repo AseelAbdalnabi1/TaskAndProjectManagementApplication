@@ -1,4 +1,5 @@
-package com.springbootproject.TaskAndProjectManagementApplication;
+package com.springbootproject.TaskAndProjectManagementApplication.Configuration;
+import com.springbootproject.TaskAndProjectManagementApplication.services.MyUserDetailsService;
 import com.springbootproject.TaskAndProjectManagementApplication.filters.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
