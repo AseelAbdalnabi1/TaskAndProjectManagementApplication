@@ -1,9 +1,6 @@
 package com.springbootproject.TaskAndProjectManagementApplication.controllers;
-import com.springbootproject.TaskAndProjectManagementApplication.models.Project;
-import com.springbootproject.TaskAndProjectManagementApplication.models.Task;
 import com.springbootproject.TaskAndProjectManagementApplication.services.EmployeeService;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Employee;
-import jakarta.persistence.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;

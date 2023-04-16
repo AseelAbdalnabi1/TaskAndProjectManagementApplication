@@ -3,14 +3,16 @@ package com.springbootproject.TaskAndProjectManagementApplication.services;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Employee;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Task;
 import com.springbootproject.TaskAndProjectManagementApplication.repositories.EmployeeRepository;
-import jakarta.transaction.Transactional;
+//import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional
+//@Transactional
 public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
@@ -22,7 +24,9 @@ public class EmployeeService {
     }
 
     public List<Employee> findAllEmployees(){
-        return employeeRepository.findAll();
+        List<Employee> result = new ArrayList<Employee>();
+        employeeRepository.findAll().forEach(result::add);
+        return result;
     }
     public Employee findEmployeeById(String id){
         return employeeRepository.findById(id).orElse(null);

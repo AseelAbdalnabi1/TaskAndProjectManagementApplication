@@ -1,13 +1,11 @@
 package com.springbootproject.TaskAndProjectManagementApplication.models;
-
-import jakarta.persistence.*;
+import com.aerospike.client.query.IndexType;
 import lombok.*;
+import org.springframework.data.aerospike.annotation.Indexed;
 import org.springframework.data.aerospike.mapping.Document;
+import org.springframework.data.annotation.Id;
 
 import java.util.UUID;
-
-//@Entity
-@Table(name = "users")
 @Setter
 @Getter
 @AllArgsConstructor
@@ -17,6 +15,7 @@ import java.util.UUID;
 public class User {
     @Id
     private String id;
+    @Indexed(name = "userName_idx", type = IndexType.STRING)
     private String userName;
     private String password;
     private boolean active;

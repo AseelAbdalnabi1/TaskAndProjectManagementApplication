@@ -8,10 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -30,12 +27,15 @@ class TaskServiceTest{
 
     @Test
     void findAllTasks() {
+        int size=0;
         List<Task> tasks1= Arrays.asList(new Task());
-
         when(taskRepository.findAll()).thenReturn(tasks1);
-        List<Task> tasks2=taskService.findAllTasks();
+        Iterable<Task> tasks2=taskService.findAllTasks();
+        if (tasks2 instanceof Collection) {
+            size= ((Collection<Task>) tasks2).size();
+        }
         assertNotNull(tasks2);
-        assertEquals(tasks1.size(),tasks2.size());
+        assertEquals(tasks1.size(),size);
     }
 
     @Test

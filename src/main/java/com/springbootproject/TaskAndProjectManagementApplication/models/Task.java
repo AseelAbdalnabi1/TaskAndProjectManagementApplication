@@ -1,16 +1,16 @@
 package com.springbootproject.TaskAndProjectManagementApplication.models;
+import com.aerospike.client.query.IndexType;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.aerospike.annotation.Indexed;
 import org.springframework.data.aerospike.mapping.Document;
+import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
-@Table(name = "tasks")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id",
@@ -25,24 +25,13 @@ import java.util.UUID;
 public class Task {
     @Id
     private String id;
-    private String name;
+    @Indexed(name = "taskName_idx", type = IndexType.STRING)
+    private String taskName;
     private String description;
-   @ManyToMany(
-           cascade = {
-                   CascadeType.PERSIST,
-                   CascadeType.MERGE
-           },mappedBy = "tasks")
     private List<Project> projects=new ArrayList<>();
-    @ManyToMany(
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },mappedBy = "tasks")
+
     private List<Employee> employees=new ArrayList<>();
 
-
-    /*public Task() {
-    }*/
     public String generateId(){
         this.id=UUID.randomUUID().toString();
         return this.id;

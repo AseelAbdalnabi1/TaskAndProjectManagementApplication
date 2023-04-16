@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.projectlombok:lombok:1.18.22'
 	implementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
@@ -29,6 +29,8 @@ dependencies {
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-params:5.8.1")
 	testRuntimeOnly("org.junit.platform:junit-platform-suite:1.8.1")
 
+
+	//implementation group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: '1.2.1.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'com.graphql-java:graphiql-spring-boot-starter:5.0.2'
@@ -36,7 +38,7 @@ dependencies {
 	runtimeOnly ('io.jsonwebtoken:jjwt-impl:0.11.2',
 			'io.jsonwebtoken:jjwt-jackson:0.11.2',
 			'org.apache.commons:commons-lang3:3.0')
-	implementation group: 'com.aerospike', name: 'spring-data-aerospike', version: '3.0.1'
+	implementation group: 'com.aerospike', name: 'spring-data-aerospike', version: '4.1.0'
 }
 
 

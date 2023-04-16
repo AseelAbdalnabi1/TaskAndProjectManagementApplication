@@ -1,12 +1,7 @@
 package com.springbootproject.TaskAndProjectManagementApplication.controllers;
-
-import com.springbootproject.TaskAndProjectManagementApplication.models.Employee;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Project;
-import com.springbootproject.TaskAndProjectManagementApplication.models.Task;
 import com.springbootproject.TaskAndProjectManagementApplication.services.ProjectService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

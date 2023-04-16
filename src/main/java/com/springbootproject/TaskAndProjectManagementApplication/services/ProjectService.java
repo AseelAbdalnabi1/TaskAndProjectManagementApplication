@@ -4,13 +4,13 @@ import com.springbootproject.TaskAndProjectManagementApplication.models.Employee
 import com.springbootproject.TaskAndProjectManagementApplication.models.Project;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Task;
 import com.springbootproject.TaskAndProjectManagementApplication.repositories.ProjectRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 @Service
-@Transactional
 public class ProjectService {
     private ProjectRepository projectRepository;
     private EmployeeService employeeService;
@@ -23,7 +23,9 @@ public class ProjectService {
     }
 
     public List<Project> getAllProjects() {
-       return projectRepository.findAll();
+        List<Project> result = new ArrayList<Project>();
+        projectRepository.findAll().forEach(result::add);
+        return result;
     }
 
     public Project findProjectById(String id) {
