@@ -39,6 +39,7 @@ dependencies {
 			'io.jsonwebtoken:jjwt-jackson:0.11.2',
 			'org.apache.commons:commons-lang3:3.0')
 	implementation group: 'com.aerospike', name: 'spring-data-aerospike', version: '4.1.0'
+	implementation group: 'org.hibernate', name: 'hibernate-validator', version: '8.0.0.Final'
 }
 
 

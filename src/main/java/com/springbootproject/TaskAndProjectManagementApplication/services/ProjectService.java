@@ -23,9 +23,9 @@ public class ProjectService {
     }
 
     public List<Project> getAllProjects() {
-        List<Project> result = new ArrayList<Project>();
-        projectRepository.findAll().forEach(result::add);
-        return result;
+        List<Project> projects = new ArrayList<Project>();
+        projectRepository.findAll().forEach(projects::add);
+        return projects;
     }
 
     public Project findProjectById(String id) {

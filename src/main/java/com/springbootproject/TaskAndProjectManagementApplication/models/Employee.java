@@ -19,9 +19,11 @@ import java.util.UUID;
         scope = Employee.class)
 @Setter
 @Getter
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+
 @Document
 public class Employee {
 

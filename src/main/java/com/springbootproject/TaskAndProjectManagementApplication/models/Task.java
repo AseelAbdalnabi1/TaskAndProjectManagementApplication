@@ -15,7 +15,7 @@ import java.util.UUID;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id",
         scope = Task.class)
-
+@Builder(toBuilder = true)
 @Setter
 @Getter
 @AllArgsConstructor

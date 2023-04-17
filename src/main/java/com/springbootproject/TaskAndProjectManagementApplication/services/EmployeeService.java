@@ -24,9 +24,9 @@ public class EmployeeService {
     }
 
     public List<Employee> findAllEmployees(){
-        List<Employee> result = new ArrayList<Employee>();
-        employeeRepository.findAll().forEach(result::add);
-        return result;
+        List<Employee> employees = new ArrayList<Employee>();
+        employeeRepository.findAll().forEach(employees::add);
+        return employees;
     }
     public Employee findEmployeeById(String id){
         return employeeRepository.findById(id).orElse(null);

@@ -1,22 +1,29 @@
 package com.springbootproject.TaskAndProjectManagementApplication.Configuration;
 
 
+import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Host;
+import com.aerospike.client.policy.ClientPolicy;
 import com.springbootproject.TaskAndProjectManagementApplication.repositories.EmployeeRepository;
 import com.springbootproject.TaskAndProjectManagementApplication.repositories.ProjectRepository;
 import com.springbootproject.TaskAndProjectManagementApplication.repositories.TaskRepository;
 import com.springbootproject.TaskAndProjectManagementApplication.repositories.UserRepository;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.aerospike.config.AbstractAerospikeDataConfiguration;
 import org.springframework.data.aerospike.config.AerospikeDataSettings;
+import org.springframework.data.aerospike.core.AerospikeTemplate;
 import org.springframework.data.aerospike.repository.config.EnableAerospikeRepositories;
+import org.springframework.security.core.parameters.P;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Collection;
 import java.util.Collections;
 
 @Configuration
-@EnableAerospikeRepositories(basePackageClasses = { EmployeeRepository.class, ProjectRepository.class, TaskRepository.class, UserRepository.class})
+@EnableTransactionManagement
+@EnableAerospikeRepositories(basePackages = "com.springbootproject.TaskAndProjectManagementApplication.repositories")
 public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
     @Override
     protected Collection<Host> getHosts() {
@@ -25,9 +32,9 @@ public class AerospikeConfiguration extends AbstractAerospikeDataConfiguration {
 
     @Override
     protected String nameSpace() {
-        return "test";
+        return "projectManagement";
     }
-
+    
     @Bean
     public AerospikeDataSettings aerospikeDataSettings() {
         return AerospikeDataSettings.builder().scansEnabled(true).build();

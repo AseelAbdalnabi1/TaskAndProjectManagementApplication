@@ -19,9 +19,9 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
     public List<Task> findAllTasks(){
-        List<Task> result = new ArrayList<Task>();
-        taskRepository.findAll().forEach(result::add);
-        return result;
+        List<Task> tasks = new ArrayList<Task>();
+        taskRepository.findAll().forEach(tasks::add);
+        return tasks;
             //return taskRepository.findAll();
     }
     public Task findTaskById(String id){

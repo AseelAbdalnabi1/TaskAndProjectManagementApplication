@@ -6,6 +6,7 @@ import org.springframework.data.aerospike.mapping.Document;
 import org.springframework.data.annotation.Id;
 
 import java.util.UUID;
+@Builder(toBuilder = true)
 @Setter
 @Getter
 @AllArgsConstructor
