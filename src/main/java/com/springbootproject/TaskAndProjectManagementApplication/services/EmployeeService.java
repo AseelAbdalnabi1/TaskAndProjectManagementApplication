@@ -3,16 +3,13 @@ package com.springbootproject.TaskAndProjectManagementApplication.services;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Employee;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Task;
 import com.springbootproject.TaskAndProjectManagementApplication.repositories.EmployeeRepository;
-//import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-//@Transactional
 public class EmployeeService {
 
     private EmployeeRepository employeeRepository;

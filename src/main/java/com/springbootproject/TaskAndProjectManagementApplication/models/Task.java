@@ -1,4 +1,5 @@
 package com.springbootproject.TaskAndProjectManagementApplication.models;
+
 import com.aerospike.client.query.IndexType;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -15,7 +16,7 @@ import java.util.UUID;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id",
         scope = Task.class)
-@Builder(toBuilder = true)
+//@Builder(toBuilder = true)
 @Setter
 @Getter
 @AllArgsConstructor
@@ -29,7 +30,6 @@ public class Task {
     private String taskName;
     private String description;
     private List<Project> projects=new ArrayList<>();
-
     private List<Employee> employees=new ArrayList<>();
 
     public String generateId(){

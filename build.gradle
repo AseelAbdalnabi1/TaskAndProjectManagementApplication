@@ -3,6 +3,7 @@ plugins {
 	id 'application'
 	id 'org.springframework.boot' version '3.0.4'
 	id 'io.spring.dependency-management' version '1.1.0'
+	//id("com.meowool.gradle.toolkit-dependency-mapper") version "0.1.0"
 
 
 }
@@ -24,10 +25,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-api:5.8.1")
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
-	testRuntimeOnly("org.junit.jupiter:junit-jupiter-params:5.8.1")
-	testRuntimeOnly("org.junit.platform:junit-platform-suite:1.8.1")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-api:5.9.2")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-params:5.9.2")
+	testRuntimeOnly("org.junit.platform:junit-platform-suite:1.9.2")
 
 
 	//implementation group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: '1.2.1.RELEASE'
@@ -40,6 +41,8 @@ dependencies {
 			'org.apache.commons:commons-lang3:3.0')
 	implementation group: 'com.aerospike', name: 'spring-data-aerospike', version: '4.1.0'
 	implementation group: 'org.hibernate', name: 'hibernate-validator', version: '8.0.0.Final'
+	implementation group: 'com.aerospike', name: 'java-object-mapper', version: '2.0.3'
+	implementation "com.aerospike:aerospike-client:6.0.0"
 }
 
 

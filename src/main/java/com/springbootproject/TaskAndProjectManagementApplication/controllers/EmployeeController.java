@@ -2,7 +2,6 @@ package com.springbootproject.TaskAndProjectManagementApplication.controllers;
 import com.springbootproject.TaskAndProjectManagementApplication.services.EmployeeService;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

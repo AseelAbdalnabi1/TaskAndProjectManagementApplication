@@ -58,6 +58,7 @@ public class ProjectService {
     }
 
     public Project attachTaskToProject(String id, String taskId) {
+
         Project project = projectRepository.findById(id).orElse(null);
         if (project==null) {
             throw new IllegalStateException("Project with id " + id + " does not exists");
@@ -65,6 +66,12 @@ public class ProjectService {
         Task task = taskService.findTaskById(taskId);
         if (task==null) {
             throw new IllegalStateException("Task with id " + id + " does not exists");
+        }
+        if (project.getTasks()==null){
+            List<Task> tasks=new ArrayList<>();
+            tasks.add(task);
+            project.setTasks(tasks);
+
         }
         if(!project.getTasks().contains(task)) {
             project.getTasks().add(task);
@@ -81,7 +88,10 @@ public class ProjectService {
         } else if (task==null) {
             throw new IllegalStateException("Task with id " + task_id + " does not exists");
         }
-        if(project.getTasks().contains(task)) {
+        if (project.getTasks()==null){
+            return project;
+        }
+        else if(project.getTasks().contains(task)) {
             project.getTasks().remove(task);
         }
         return project;
