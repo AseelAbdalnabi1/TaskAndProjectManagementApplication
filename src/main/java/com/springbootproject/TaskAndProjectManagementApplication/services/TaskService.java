@@ -20,11 +20,11 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
     public List<Task> findAllTasks(){
-        logger.trace("finding all tasks");
+        logger.info("finding all tasks");
             return taskRepository.findAll();
     }
     public Task findTaskById(String id){
-        logger.debug("finding task by id");
+        logger.info("finding task by id");
          return taskRepository.findById(id).orElse(null);
     }
     public List<Task> findTaskByName(String name) {
@@ -32,7 +32,7 @@ public class TaskService {
         return taskRepository.findByName(name);
     }
     public Task createTask(Task task){
-        logger.debug("creating a task");
+        logger.info("creating a task");
         task.generateId();
        return taskRepository.save(task);
     }
@@ -51,7 +51,7 @@ public class TaskService {
             logger.error("task does not exit");
             throw new IllegalStateException("task with id "+ id +" does not exists");
         }
-        logger.trace("deleting the task");
+        logger.info("deleting the task");
         taskRepository.deleteById(id);
     }
 }
