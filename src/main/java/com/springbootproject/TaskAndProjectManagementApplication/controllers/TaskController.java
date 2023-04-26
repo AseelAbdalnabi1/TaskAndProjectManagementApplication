@@ -2,18 +2,20 @@ package com.springbootproject.TaskAndProjectManagementApplication.controllers;
 
 import com.springbootproject.TaskAndProjectManagementApplication.models.Task;
 import com.springbootproject.TaskAndProjectManagementApplication.services.TaskService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
+
 @RestController
 @RequestMapping("/tasks")
 public class TaskController {
-
+    private static final Logger logger= LoggerFactory.getLogger(TaskController.class);
     private TaskService taskService;
     @Autowired
     public TaskController(TaskService taskService) {
@@ -23,6 +25,7 @@ public class TaskController {
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
     public List<Task> findAllTasks(){
+
         return taskService.findAllTasks();
     }
     @GetMapping("/{id}")
