@@ -1,14 +1,11 @@
 package com.springbootproject.TaskAndProjectManagementApplication.controllers;
 
-import com.springbootproject.TaskAndProjectManagementApplication.models.Employee;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Project;
-import com.springbootproject.TaskAndProjectManagementApplication.models.Task;
 import com.springbootproject.TaskAndProjectManagementApplication.services.ProjectService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -37,12 +34,12 @@ public class ProjectController {
 
     @PutMapping("/{id}/attach/tasks/{task-id}")//the attach to differentiate between paths
     @ResponseStatus(code = HttpStatus.OK)
-    public Project attachTaskToProject(@PathVariable String id,@PathVariable("task-id") String taskId){
+    public Project attachTaskToProject(@PathVariable String id,@PathVariable("task-id") String taskId) throws Exception{
         return projectService.attachTaskToProject(id,taskId);
     }
     @PutMapping("/{id}/discard/tasks/{task-id}")//the attach to differentiate between paths
     @ResponseStatus(code = HttpStatus.OK)
-    public Project discardTaskFromProject(@PathVariable String id,@PathVariable("task-id") String taskId){
+    public Project discardTaskFromProject(@PathVariable String id,@PathVariable("task-id") String taskId) throws Exception{
         return projectService.discardTaskFromProject(id,taskId);
 
     }

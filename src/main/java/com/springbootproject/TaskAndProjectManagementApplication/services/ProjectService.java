@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 @Service
 @Transactional
@@ -55,7 +56,7 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-    public Project attachTaskToProject(String id, String taskId) {
+    public Project attachTaskToProject(String id, String taskId) throws Exception {
         Project project = projectRepository.findById(id).orElse(null);
         if (project==null) {
             throw new IllegalStateException("Project with id " + id + " does not exists");
@@ -71,7 +72,7 @@ public class ProjectService {
 
     }
 
-    public Project discardTaskFromProject(String id, String task_id) {
+    public Project discardTaskFromProject(String id, String task_id ) throws Exception {
         Project project = projectRepository.findById(id).orElse(null);
         Task task = taskService.findTaskById(task_id);
         if (project==null) {

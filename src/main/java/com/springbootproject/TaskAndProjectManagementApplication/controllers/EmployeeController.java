@@ -1,11 +1,8 @@
 package com.springbootproject.TaskAndProjectManagementApplication.controllers;
-import com.springbootproject.TaskAndProjectManagementApplication.models.Project;
-import com.springbootproject.TaskAndProjectManagementApplication.models.Task;
-import com.springbootproject.TaskAndProjectManagementApplication.services.EmployeeService;
+
 import com.springbootproject.TaskAndProjectManagementApplication.models.Employee;
-import jakarta.persistence.Table;
+import com.springbootproject.TaskAndProjectManagementApplication.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,13 +50,13 @@ public class EmployeeController {
     }
     @PutMapping("/{id}/attach/tasks/{task-id}")//the (attach) word added to differentiate between attachTaskToEmployee path &  discardTaskFromEmployee path --need to be discussed
     @ResponseStatus(code = HttpStatus.OK)
-    public Employee attachTaskToEmployee(@PathVariable String id, @PathVariable(name = "task-id") String taskId){
+    public Employee attachTaskToEmployee(@PathVariable String id, @PathVariable(name = "task-id") String taskId) throws Exception {
         return employeeService.attachTaskToEmployee(id,taskId);
 
     }
     @PutMapping("/{id}/discard/tasks/{task-id}")//the (discard) word added to differentiate between attachTaskToEmployee path &  discardTaskFromEmployee path --need to be discussed
     @ResponseStatus(code = HttpStatus.OK)
-    public Employee discardTaskFromEmployee(@PathVariable String id,@PathVariable("task-id") String task_id){
+    public Employee discardTaskFromEmployee(@PathVariable String id,@PathVariable("task-id") String task_id) throws Exception{
         return employeeService.discardTaskFromEmployee(id,task_id);
     }
 }

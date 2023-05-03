@@ -5,8 +5,8 @@ import com.springbootproject.TaskAndProjectManagementApplication.models.Task;
 import com.springbootproject.TaskAndProjectManagementApplication.repositories.EmployeeRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -48,7 +48,7 @@ public class EmployeeService {
         }
         employeeRepository.deleteById(id);
     }
-     public Employee attachTaskToEmployee(String id, String taskId) {
+     public Employee attachTaskToEmployee(String id, String taskId) throws Exception{
         Employee employee = employeeRepository.findById(id).orElse(null);
         if (employee==null) {
             throw new IllegalStateException("Employee with id " + id + " does not exists");
@@ -63,7 +63,7 @@ public class EmployeeService {
             return employee;
     }
 
-    public Employee discardTaskFromEmployee(String id,String task_id) {
+    public Employee discardTaskFromEmployee(String id,String task_id) throws Exception{
         Employee employee=employeeRepository.findById(id).orElse(null);
         Task task=taskService.findTaskById(task_id);
         if(employee==null){

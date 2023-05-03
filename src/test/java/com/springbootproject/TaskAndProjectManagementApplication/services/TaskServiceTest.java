@@ -29,7 +29,7 @@ class TaskServiceTest{
     }
 
     @Test
-    void findAllTasks() {
+    void findAllTasks() throws Exception {
         List<Task> tasks1= Arrays.asList(new Task());
 
         when(taskRepository.findAll()).thenReturn(tasks1);
@@ -54,7 +54,7 @@ class TaskServiceTest{
     }
 
     @Test
-    void findTaskByName() {
+    void findTaskByName() throws Exception{
         List<Task> tasks1=new ArrayList<>();
         tasks1.add(new Task());
         tasks1.add(new Task());
@@ -79,7 +79,7 @@ class TaskServiceTest{
     }
 
     @Test
-    void updateTask(){
+    void updateTask() throws Exception{
         Task task1 =new Task();
         task1.setName("task1");
         task1.setDescription("task1 description");
