@@ -42,7 +42,7 @@ dependencies {
 	implementation group: 'com.aerospike', name: 'spring-data-aerospike', version: '4.1.0'
 	implementation group: 'org.hibernate', name: 'hibernate-validator', version: '8.0.0.Final'
 	implementation group: 'com.aerospike', name: 'java-object-mapper', version: '2.0.3'
-	implementation "com.aerospike:aerospike-client:6.0.0"
+	//implementation "com.aerospike:aerospike-client:6.0.0"
 }
 
 
