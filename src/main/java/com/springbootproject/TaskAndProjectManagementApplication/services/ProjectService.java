@@ -1,9 +1,12 @@
 package com.springbootproject.TaskAndProjectManagementApplication.services;
 
+import com.springbootproject.TaskAndProjectManagementApplication.exceptions.TaskAttachmentToProjectException;
+import com.springbootproject.TaskAndProjectManagementApplication.exceptions.TaskNotFoundException;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Employee;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Project;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Task;
 import com.springbootproject.TaskAndProjectManagementApplication.repositories.ProjectRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -59,16 +62,18 @@ public class ProjectService {
     public Project attachTaskToProject(String id, String taskId) throws Exception {
         Project project = projectRepository.findById(id).orElse(null);
         if (project==null) {
-            throw new IllegalStateException("Project with id " + id + " does not exists");
+            throw new EntityNotFoundException("Project with id " + id + " does not exists");
         }
         Task task = taskService.findTaskById(taskId);
         if (task==null) {
-            throw new IllegalStateException("Task with id " + id + " does not exists");
+            throw new TaskNotFoundException("Task with id " + taskId + " does not exists");
         }
-        if(!project.getTasks().contains(task)) {
+        if(project.getTasks().contains(task)) {
+            throw new TaskAttachmentToProjectException("Task with id: " + taskId + " is already attached to project with id: " + id );
+        }else {
             project.getTasks().add(task);
         }
-        return project;
+        return projectRepository.save(project);
 
     }
 
@@ -76,14 +81,16 @@ public class ProjectService {
         Project project = projectRepository.findById(id).orElse(null);
         Task task = taskService.findTaskById(task_id);
         if (project==null) {
-            throw new IllegalStateException("Project with id " + id + " does not exists");
+            throw new EntityNotFoundException("Project with id " + id + " does not exists");
         } else if (task==null) {
-            throw new IllegalStateException("Task with id " + task_id + " does not exists");
+            throw new TaskNotFoundException("Task with id " + task_id + " does not exists");
         }
-        if(project.getTasks().contains(task)) {
+        if(!project.getTasks().contains(task)) {
+            throw new TaskNotFoundException("Task with id: " + task_id + " is Not attached to project with id: " + id );
+        }else {
             project.getTasks().remove(task);
         }
-        return project;
+        return projectRepository.save(project);
     }
 
     public Project attachEmployeeToProject(String id, String employeeId) {
@@ -98,7 +105,7 @@ public class ProjectService {
         if(employee.getProject()!=project) {
             employee.setProject(project);
         }
-        return project;
+        return projectRepository.save(project);
     }
 
     public Project discardEmployeeFromProject(String id, String employeeId) {
@@ -113,7 +120,7 @@ public class ProjectService {
         if(employee.getProject()==project) {
             employee.setProject(null);
         }
-        return project;
+        return projectRepository.save(project);
     }
 }
 

@@ -39,7 +39,7 @@ class TaskServiceTest{
     }
 
     @Test
-    void findTaskById() {
+    void findTaskById() throws Exception{
         Task task= new Task();
         task.setDescription("task1 description");
         task.setName("task1");
@@ -65,7 +65,7 @@ class TaskServiceTest{
     }
 
     @Test
-    void createTask(){
+    void createTask() throws Exception{
         Task task1 =new Task();
         task1.setName("task1");
         task1.setDescription("task1 description");

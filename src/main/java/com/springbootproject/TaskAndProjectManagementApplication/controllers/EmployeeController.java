@@ -15,19 +15,12 @@ public class EmployeeController {
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
-
-    @GetMapping
-    @ResponseStatus(code = HttpStatus.OK)
-    public List<Employee> findAllEmployeeS(){
-        return employeeService.findAllEmployees();
-    }
-
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public Employee findEmployeeById(@PathVariable String id){
         return employeeService.findEmployeeById(id);
     }
-    @GetMapping("/")//needs fixes--produces errors because there is already a get method without a specific path (getAllemployees)
+    @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
     public List<Employee> findEmployeeByName(@RequestParam(name = "name") String name){
         return employeeService.findEmployeeByName(name);
@@ -41,22 +34,5 @@ public class EmployeeController {
     @ResponseStatus(code = HttpStatus.OK)
     public Employee updateEmployeeById(@RequestBody Employee employee,@PathVariable String id){
         return employeeService.updateEmployeeById(id,employee);
-    }
-    @DeleteMapping("/{id}")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void deleteEmployeeById(@PathVariable String id)
-    {
-        employeeService.deleteEmployeeById(id);
-    }
-    @PutMapping("/{id}/attach/tasks/{task-id}")//the (attach) word added to differentiate between attachTaskToEmployee path &  discardTaskFromEmployee path --need to be discussed
-    @ResponseStatus(code = HttpStatus.OK)
-    public Employee attachTaskToEmployee(@PathVariable String id, @PathVariable(name = "task-id") String taskId) throws Exception {
-        return employeeService.attachTaskToEmployee(id,taskId);
-
-    }
-    @PutMapping("/{id}/discard/tasks/{task-id}")//the (discard) word added to differentiate between attachTaskToEmployee path &  discardTaskFromEmployee path --need to be discussed
-    @ResponseStatus(code = HttpStatus.OK)
-    public Employee discardTaskFromEmployee(@PathVariable String id,@PathVariable("task-id") String task_id) throws Exception{
-        return employeeService.discardTaskFromEmployee(id,task_id);
     }
 }

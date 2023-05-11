@@ -1,14 +1,19 @@
 package com.springbootproject.TaskAndProjectManagementApplication.services;
 
 
+import com.springbootproject.TaskAndProjectManagementApplication.exceptions.TaskCanNotBeCreatedException;
+import com.springbootproject.TaskAndProjectManagementApplication.exceptions.TaskNotDeletedException;
+import com.springbootproject.TaskAndProjectManagementApplication.exceptions.TaskNotFoundException;
 import com.springbootproject.TaskAndProjectManagementApplication.models.Task;
 import com.springbootproject.TaskAndProjectManagementApplication.repositories.TaskRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,37 +25,44 @@ public class TaskService {
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
-    public List<Task> findAllTasks() throws Exception {
+    public List<Task> findAllTasks() {
         logger.info("finding all tasks");
-        List<Task> tasks=taskRepository.findAll();
-        if (tasks.isEmpty()) {
-            throw new Exception();
-        }
-        return tasks;
-         //return taskRepository.findAll();
+         return taskRepository.findAll();
     }
-    public Task findTaskById(String id) {
+    public Task findTaskById(String id) throws Exception {
         logger.info("finding task by id");
-        return taskRepository.findById(id).get();
+        Task task;
+        try{
+            task=taskRepository.findById(id).get();
+        }catch (Exception exception){
+            throw new TaskNotFoundException("task with id : "+id+" is NOT found");
+        }
+        return task;
     }
     public List<Task> findTaskByName(String name) throws Exception {
         logger.info("finding tasks by name");
-        List<Task> tasks=taskRepository.findByName(name);
-        if (tasks.isEmpty()) {
-            throw new Exception();
-        }
+        List<Task> tasks = taskRepository.findByName(name);
+            if (tasks.isEmpty()) {
+                throw new TaskNotFoundException("There is NO tasks with the name:"+name);
+            }
         return tasks;
     }
-    public Task createTask(Task task){
+    public Task createTask(Task task) throws Exception{
         logger.info("creating a task");
         task.generateId();
-       return taskRepository.save(task);
+        Task createdTask;
+        try{
+            createdTask= taskRepository.save(task);
+        }catch (IllegalArgumentException  exception){
+            throw new TaskCanNotBeCreatedException("task not created");
+        }
+        return createdTask;
     }
     public Task updateTask(Task task,String id) throws Exception {
         boolean exists = taskRepository.existsById(id);
         if(!exists){
             logger.error("task does not exit");
-            throw new Exception();
+            throw new TaskNotFoundException("Task with id: "+id+" Not found");
         }
         logger.info("updating the task");
        return taskRepository.save(task);
@@ -59,9 +71,13 @@ public class TaskService {
         boolean exists = taskRepository.existsById(id);
         if(!exists){
             logger.error("task does not exit");
-            throw new Exception();
+            throw new TaskNotFoundException("Task with id: "+id+" Not found");
         }
         logger.info("deleting the task");
-        taskRepository.deleteById(id);
+        try {
+            taskRepository.deleteById(id);
+        } catch (IllegalArgumentException e) {
+          throw new TaskNotDeletedException("Task with id:"+id+" can Not be deleted");
+        }
     }
 }
